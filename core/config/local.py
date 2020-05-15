@@ -1,3 +1,4 @@
+__author__ = 'Tony'
 """
 Django settings for project project.
 
@@ -25,8 +26,7 @@ SECRET_KEY = 'f8^d84rz-epxo0$5$xrc3j+#q-tz%&eic_e#q2r4q5g&%29+tf'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -161,8 +161,3 @@ STATIC_URL = '/static/'
 
 # Allows any client access.
 CORS_ORIGIN_ALLOW_ALL = True
-
-
-
-
-
