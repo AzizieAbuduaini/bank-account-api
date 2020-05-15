@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-
+import datetime
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "rest_framework_swagger",
-    "accounts",
-    "authentication",
+    "apps.accounts",
+    "apps.authentication",
 ]
 
 MIDDLEWARE = [
@@ -55,7 +55,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'project.urls'
+ROOT_URLCONF = 'core.urls'
 
 TEMPLATES = [
     {
@@ -73,7 +73,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'project.wsgi.application'
+WSGI_APPLICATION = 'core.wsgi.application'
 
 
 # Database
@@ -82,14 +82,21 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'thunes',
-        'USER': 'tony',
-        'PASSWORD': 'password',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'NAME': 'thunes_db',
+        'USER': 'thunes_user',
+        'PASSWORD': 'password@2020',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination'
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -109,6 +116,29 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Django rest all auth account configuration
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_USER_EMAIL_FIELD = 'email'
+ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = False
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
+ACCOUNT_EMAIL_VERIFICATION = 'optional'
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 500
+ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = True
+SOCIALACCOUNT_EMAIL_VERIFICATION = ACCOUNT_EMAIL_VERIFICATION
+SOCIALACCOUNT_EMAIL_REQUIRED = ACCOUNT_EMAIL_REQUIRED
+REST_USE_JWT = True
+# APPEND_SLASH = False
+LOGOUT_ON_PASSWORD_CHANGE = ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE
+JWT_AUTH = {
+    "JWT_ALLOW_REFRESH": True,
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
+    "JWT_REFRESH_EXPIRATION_DELTA": datetime.timedelta(days=7)
+
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
@@ -132,9 +162,7 @@ STATIC_URL = '/static/'
 # Allows any client access.
 CORS_ORIGIN_ALLOW_ALL = True
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ],
-    "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
-}
+
+
+
+

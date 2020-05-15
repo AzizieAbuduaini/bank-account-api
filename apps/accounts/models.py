@@ -24,7 +24,7 @@ class BaseModel(models.Model):
         abstract = True
 
 
-class UserAccount(models.Model):
+class UserAccount(BaseModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_account')
     account = models.IntegerField()
     balance = models.DecimalField(max_digits=20, decimal_places=4)
@@ -40,7 +40,7 @@ class UserAccount(models.Model):
 
 class Transaction(BaseModel):
     amount = models.DecimalField(max_digits=20, decimal_places=4)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owner')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owner', blank=False, null=False)
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender')
     receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='receiver')
     status = EnumField(TransactionStatuses, null=False)

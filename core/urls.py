@@ -6,7 +6,7 @@ schema_view = get_swagger_view(title="Thunes API")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/account', include('accounts.urls')),
-    path('api/auth/', include('authentication.urls'), name='jwtauth'),
+    path('api/account/', include('apps.accounts.urls')),
+    path('api/auth/', include('apps.authentication.urls'), name='jwtauth'),
     path('api/docs/', schema_view),
 ]
