@@ -29,7 +29,3 @@ This api provides functionalities with jwt authentication, create account, topup
 
 ### Author: Tony Aizize
 Read more about me at: http://taymas-technology.globalpeacelove.com/about-me
-
-
-
-
